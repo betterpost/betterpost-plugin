@@ -1,0 +1,21 @@
+{
+  "name": "betterpost",
+  "description": "Write timely, well-sourced content — newsletters, blog posts, and social posts grounded in current news, social, and web sources.",
+  "version": "0.1.0",
+  "author": {
+    "name": "BetterPost",
+    "email": "hello@betterpost.ai"
+  },
+  "homepage": "https://betterpost.ai",
+  "repository": "https://github.com/betterpost/betterpost-plugin",
+  "license": "MIT",
+  "keywords": [
+    "content",
+    "writing",
+    "newsletter",
+    "blog",
+    "social",
+    "sources",
+    "mcp"
+  ]
+}

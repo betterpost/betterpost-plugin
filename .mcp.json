@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "betterpost": {
+      "type": "http",
+      "url": "https://betterpost.ai/mcp"
+    }
+  }
+}

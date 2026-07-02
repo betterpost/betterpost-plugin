@@ -1,0 +1,29 @@
+{
+  "name": "betterpost-plugin",
+  "version": "0.1.0",
+  "description": "BetterPost skill and multi-agent bootstrap: write timely, well-sourced content.",
+  "type": "module",
+  "main": ".opencode/plugins/betterpost.js",
+  "homepage": "https://betterpost.ai",
+  "repository": "https://github.com/betterpost/betterpost-plugin",
+  "license": "MIT",
+  "scripts": {
+    "sync": "node scripts/sync.js"
+  },
+  "keywords": [
+    "pi-package",
+    "content",
+    "writing",
+    "newsletter",
+    "social",
+    "mcp"
+  ],
+  "pi": {
+    "extensions": [
+      "./.pi/extensions/betterpost.ts"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  }
+}

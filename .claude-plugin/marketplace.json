@@ -1,0 +1,19 @@
+{
+  "name": "betterpost",
+  "owner": {
+    "name": "BetterPost",
+    "email": "hello@betterpost.ai"
+  },
+  "metadata": {
+    "description": "BetterPost — write timely, well-sourced content with the agents you already use."
+  },
+  "plugins": [
+    {
+      "name": "betterpost",
+      "source": "./",
+      "description": "Write timely, well-sourced content — newsletters, blog posts, and social posts grounded in current news, social, and web sources.",
+      "version": "0.1.0",
+      "strict": true
+    }
+  ]
+}

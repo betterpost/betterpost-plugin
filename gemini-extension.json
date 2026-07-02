@@ -1,0 +1,11 @@
+{
+  "name": "betterpost",
+  "description": "Write timely, well-sourced content — newsletters, blog posts, and social posts grounded in current news, social, and web sources.",
+  "version": "0.1.0",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "betterpost": {
+      "httpUrl": "https://betterpost.ai/mcp"
+    }
+  }
+}

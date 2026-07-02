@@ -1,0 +1,42 @@
+{
+  "name": "betterpost",
+  "version": "0.1.0",
+  "description": "Write timely, well-sourced content — newsletters, blog posts, and social posts grounded in current news, social, and web sources.",
+  "author": {
+    "name": "BetterPost",
+    "email": "hello@betterpost.ai",
+    "url": "https://betterpost.ai"
+  },
+  "homepage": "https://betterpost.ai",
+  "repository": "https://github.com/betterpost/betterpost-plugin",
+  "license": "MIT",
+  "keywords": [
+    "content",
+    "writing",
+    "newsletter",
+    "blog",
+    "social",
+    "sources",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "BetterPost",
+    "shortDescription": "Write timely, well-sourced newsletters, blog posts, and social posts",
+    "longDescription": "Use BetterPost to write newsletters, blog posts, LinkedIn posts, tweets, and Bluesky posts grounded in current sources across news, social, and the open web — ranked by relevance, with real citations and publication dates. Free to try, no signup.",
+    "developerName": "BetterPost",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Write me a newsletter about what's happening in my space this week.",
+      "Draft a LinkedIn post about a recent development relevant to my product."
+    ],
+    "websiteURL": "https://betterpost.ai",
+    "brandColor": "#1A1A1A",
+    "screenshots": []
+  }
+}
