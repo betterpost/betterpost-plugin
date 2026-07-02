@@ -39,13 +39,16 @@ Do not use BetterPost for unrelated coding, research, or non-content tasks.
    `type` is one of `newsletter`, `blog`, `linkedin`, `x`, `bluesky`. Pass `tie_in`
    to weave in a product mention. An unknown `topic` returns a `topic_unavailable`
    error (no charge) rather than writing something off-topic.
+   To pick a `topic`, you can first call `betterpost_stories(action: 'suggest_topics', projectId, type)`
+   for a few candidate angles from the project's current stories, then ask the user
+   whether they want one of those or just the latest news (omit `topic`).
 3. **Repurpose.** `betterpost_derive_content(fromContentId, type)` transforms an
    existing piece into another format without re-fetching.
 4. **Inspect and tune** with the read/manage tools below.
 
 ## Tool reference
 
-Every tool takes an optional `token` argument (see Authentication). It is omitted
+Every tool takes an optional `token` argument (see Configuration). It is omitted
 from the table below.
 
 <!-- BEGIN GENERATED TOOL REFERENCE -->
@@ -62,10 +65,10 @@ from the table below.
 | `betterpost_projects` | `action`, `projectId`, `patch` | Manage projects: list \| get \| update \| delete. (Use create_project to make one.) Updating title/audience/description re-derives the project's relevance criteria (replace-all), so it is one way to broaden or narrow what counts as on-topic; or edit criteria INCREMENTALLY with `patch.addCriteria` (texts to append) and `patch.removeCriteria` (criterion ids to drop). `list`/`get` return the project's `criteria` with ids so you can target a removal. Pair a broadened scope with a new source — or just call betterpost_expand_coverage, which does both. Dates default to US Eastern; change them with the project `timezone` (an IANA name like "America/New_York"). |
 | `betterpost_settings` | `action`, `projectId`, `type`, `wordLimit`, `additionalInstructions` | Tune a project's per-content-type knobs: get \| set. `set` patches a content type's wordLimit and/or additionalInstructions (free-form writing guidance for that type; pass an empty string to clear it). Project-wide preferences (title/audience/tone, project-wide additionalInstructions) live on the projects tool. |
 | `betterpost_sources` | `action`, `projectId`, `sourceId`, `limit`, `offset`, `name`, `type`, `value` | Manage a project's sources: list \| add \| remove. `list` returns one slimmed page of sources plus project-wide `total` and `counts` (ok/failing/disabled/pending, and byType); page with `limit` (default 50) and `offset`, following `nextOffset` until it is null. `add` doubles as manual source import — paste any URL (RSS/Atom feed, article, or a page, profile, or post on a supported platform) and leave `type` as autodetect, or create a recurring keyword search by setting `value` to the search terms and `type` to a search kind (see `type`). `add` fetches the new source right away (bounded by a few seconds) and returns `storiesAdded`, so the next generate_content can use it; if it is still fetching it returns `fetched:false` with a note. |
-| `betterpost_stories` | `action`, `projectId`, `storyId`, `url`, `title`, `summary`, `includeHidden` | Manage a project's stories: list \| add \| hide \| unhide. `add` manually imports a story you read about (pinned relevance, flagged is_manual). |
+| `betterpost_stories` | `action`, `projectId`, `storyId`, `url`, `title`, `summary`, `includeHidden`, `type`, `count` | Manage a project's stories: list \| add \| hide \| unhide \| suggest_topics. `add` manually imports a story you read about (pinned relevance, flagged is_manual). `suggest_topics` clusters the project's current stories into a few candidate angles (each with a label, how many stories back it, and example headlines), warming the project in the process — use it to offer the user specific topics before generate_content. |
 <!-- END GENERATED TOOL REFERENCE -->
 
-## Authentication — persist the token
+## Configuration — authentication and tokens
 
 The first call with no credentials is issued a **demo token** in the response. Save
 it to durable memory (a notes file, memory store, or wherever you persist facts
