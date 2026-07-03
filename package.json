@@ -1,6 +1,6 @@
 {
   "name": "betterpost-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "BetterPost skill and multi-agent bootstrap: write timely, well-sourced content.",
   "type": "module",
   "main": ".opencode/plugins/betterpost.js",
