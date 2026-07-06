@@ -1,9 +1,10 @@
 <!-- Synced from https://betterpost.ai/.well-known/skills — do not edit by hand. -->
 
-# BetterPost — for agents
+# Using BetterPost
 
-> The definitive guide to what BetterPost is and how to use it. This file is the
-> single source of truth; the website and the per-agent skill files derive from it.
+> BetterPost is a hosted service, available as an MCP server, that writes timely,
+> well-sourced content. This guide covers what it does, how to add it, and how to
+> use it — for both people and the agents acting on their behalf.
 
 BetterPost writes **timely, well-sourced content** — newsletters, blog posts,
 LinkedIn posts, tweets, and Bluesky posts — grounded in current sources across news,
@@ -14,6 +15,18 @@ citations and publication dates.
 You reach BetterPost through its **MCP server** at `https://betterpost.ai/mcp`
 (Streamable HTTP). Tools are namespaced `betterpost_*`. **Free to try** — the first
 call with no credentials is issued a demo token; no signup or API key needed to start.
+
+## Add BetterPost
+
+BetterPost is a remote MCP server, so any client that supports custom MCP connectors
+can use it — no install or local process to run.
+
+- **Claude** — Settings (or Customize) → Connectors → **Add custom connector** →
+  paste `https://betterpost.ai/mcp`. No token is required to start.
+- **Claude Code** — `claude mcp add betterpost --transport http https://betterpost.ai/mcp`
+- **Other agents (Cursor, VS Code, Codex, Cline, Zed, and more)** — add a custom
+  Streamable-HTTP MCP server pointing at `https://betterpost.ai/mcp`. Per-client steps and
+  one-click buttons are on the BetterPost site.
 
 ## When to use BetterPost
 
@@ -33,10 +46,10 @@ Do not use BetterPost for unrelated coding, research, or non-content tasks.
    gathers an initial set of relevant, recent stories. **Confirm the audience,
    description, and tone with the user before calling it** — the call is one-shot and
    the config shapes everything downstream.
-2. **Generate content.** `betterpost_generate_content(projectId, type, [topic], [tie_in])`
+2. **Generate content.** `betterpost_generate_content(projectId, type, [topic], [tieIn], [reuse], [wordLimit])`
    writes a piece from the project's timely, relevant stories. Fast once the project
    is warm; the first generation on a cold project can take a couple of minutes.
-   `type` is one of `newsletter`, `blog`, `linkedin`, `x`, `bluesky`. Pass `tie_in`
+   `type` is one of `newsletter`, `blog`, `linkedin`, `x`, `bluesky`. Pass `tieIn`
    to weave in a product mention. An unknown `topic` returns a `topic_unavailable`
    error (no charge) rather than writing something off-topic.
    To pick a `topic`, you can first call `betterpost_suggest_topics(projectId, type)`
@@ -46,6 +59,20 @@ Do not use BetterPost for unrelated coding, research, or non-content tasks.
    existing piece into another format without re-fetching.
 4. **Inspect and tune** with the read/manage tools below.
 
+## Example — a first run
+
+A user says: *"Write me this week's newsletter about what's happening in electric
+vehicles."*
+
+1. `betterpost_create_project(title: "EV Weekly", audience: "EV owners, shoppers, and industry watchers", tone: "clear, informed")`
+   → returns a `projectId` (save it) and seeds the project with recent EV stories.
+2. `betterpost_generate_content(projectId, type: "newsletter")`
+   → returns a finished newsletter with a shareable link and real source citations,
+   each carrying its publication date.
+
+That's the whole happy path: one `create_project`, then `generate_content` whenever
+the user wants a fresh piece. Everything below is for tuning and repurposing.
+
 ## Tool reference
 
 Every tool takes an optional `token` argument (see Configuration). It is omitted
@@ -54,7 +81,7 @@ from the table below.
 <!-- BEGIN GENERATED TOOL REFERENCE -->
 | Tool | Parameters | What it does |
 |---|---|---|
-| `betterpost_create_project` | `title`, `audience`, `description`, `tone` | Create a content project. Slow, one-shot: infers config (criteria, industry, tone), discovers sources, and gathers/ranks an initial set of timely stories. Confirm the inferred config with the user before calling. |
+| `betterpost_create_project` | `title`, `audience`, `description`, `tone` | Create a content project. Slow, one-shot: infers config (criteria, industry, tone), discovers sources, and gathers/ranks an initial set of timely stories. Best called after the inferred audience, description, and tone have been confirmed with the user, since the config shapes everything downstream. |
 | `betterpost_generate_content` | `projectId`, `type`, `topic`, `reuse`, `tieIn`, `wordLimit` | Generate a new piece of content for a project from its timely, relevant stories. Fast in steady state. Charges credits on success only. If you pass a `topic` the project has no stories about, this returns a `topic_unavailable` error (no charge) carrying an `inScope` flag and next steps — it never silently writes an off-topic piece. |
 | `betterpost_derive_content` | `fromContentId`, `type`, `tieIn` | Transform an existing piece into another format (e.g. newsletter → tweet). No fetching; reuses the source stories and topic. |
 | `betterpost_add_source` | `projectId`, `value`, `name`, `type` | Adds a source to a project and fetches it immediately (bounded by a few seconds), returning `storiesAdded` so the next generate_content can use it; if it is still fetching it returns `fetched:false` with a note. Doubles as manual source import: paste any URL (RSS/Atom feed, article, or a page, profile, or post on a supported platform) and leave `type` as autodetect, or create a recurring keyword search by setting `value` to the search terms and `type` to a search kind (see `type`). |
@@ -96,4 +123,14 @@ Paid users can instead put their key in the server URL (`?key=…`) or an
 - Content is **charged on success only** — a failed generation isn't charged.
 - Every piece has a shareable link and carries real source citations with
   **publication dates** — surface those to the user.
+- Any images shown come from the **cited source articles**, not from AI image
+  generation — BetterPost writes text.
+- Credits are prepaid; when the demo runs out, the response explains how to convert
+  to a paid account. Manage credits at https://betterpost.ai/app/billing.
+
+## Support and policies
+
+- **Support:** support@betterpost.ai
+- **Privacy policy:** https://betterpost.ai/privacy
+- **Terms of service:** https://betterpost.ai/terms
 - Learn more at https://betterpost.ai.
