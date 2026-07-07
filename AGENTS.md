@@ -94,7 +94,7 @@ from the table below.
 | `betterpost_get_settings` | `projectId` | Returns a project's per-content-type settings (wordLimit and additionalInstructions for each channel). |
 | `betterpost_get_usage` | — | Demo generations remaining, or paid credit balance + recent spend. |
 | `betterpost_hide_story` | `storyId` | Hides a story so generation ignores it. Reversible with unhide_story. |
-| `betterpost_list_content` | `projectId` | List a project's content (summaries + share ids). |
+| `betterpost_list_content` | `projectId` | List a project's content (summaries + shareable `publicUrl` links). |
 | `betterpost_list_projects` | — | Returns your projects, each with its relevance `criteria` (with ids) that define what counts as on-topic. |
 | `betterpost_list_sources` | `projectId`, `limit`, `offset` | Returns one slimmed page of a project's sources plus project-wide `total` and `counts` (ok/failing/disabled/pending, and byType). Page with `limit` (default 50) and `offset`, following the returned `nextOffset` until it is null. |
 | `betterpost_list_stories` | `projectId`, `includeHidden` | Returns a project's gathered stories, each with `title`, `url`, `summary`, `relevancy`, `publicationDate`, and `isManual`/`isHidden` flags. Pass includeHidden to include hidden ones. |
