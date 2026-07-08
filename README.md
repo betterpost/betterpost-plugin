@@ -7,8 +7,7 @@ ranks them by relevance, and writes human-sounding content with real citations a
 publication dates.
 
 Works in the agents you already use, through a single [MCP](https://modelcontextprotocol.io)
-server. **Free to try** — the first call issues a demo token; no signup or API key
-needed to start.
+server. **Free to start** — sign in with your BetterPost account to get free credits.
 
 ## Install (Claude Code)
 
@@ -29,10 +28,10 @@ will set up a project and generate content grounded in current sources.
 
 ## Using the server directly
 
-Any MCP client can connect to `https://betterpost.ai` (Streamable HTTP). No key is
-required to start — the first call issues a demo token. Persist that token and send
-it back as the `token` argument (or, for paid keys, via `?key=…` or an
-`Authorization: Bearer` header).
+Any MCP client can connect to `https://betterpost.ai` (Streamable HTTP). On first
+use, the client prompts you to sign in with your BetterPost account (OAuth 2.1) and
+handles the session for you — there's no token to copy or persist. New accounts get
+free credits on sign-up.
 
 ## Links
 

@@ -1,6 +1,6 @@
 {
   "name": "betterpost",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Write timely, well-sourced content — newsletters, blog posts, and social posts grounded in current news, social, and web sources.",
   "author": {
     "name": "BetterPost",
@@ -24,7 +24,7 @@
   "interface": {
     "displayName": "BetterPost",
     "shortDescription": "Write timely, well-sourced newsletters, blog posts, and social posts",
-    "longDescription": "Use BetterPost to write newsletters, blog posts, LinkedIn posts, tweets, and Bluesky posts grounded in current sources across news, social, and the open web — ranked by relevance, with real citations and publication dates. Free to try, no signup.",
+    "longDescription": "Use BetterPost to write newsletters, blog posts, LinkedIn posts, tweets, and Bluesky posts grounded in current sources across news, social, and the open web — ranked by relevance, with real citations and publication dates. Free to start — sign in with your BetterPost account for free credits.",
     "developerName": "BetterPost",
     "capabilities": [
       "Interactive",

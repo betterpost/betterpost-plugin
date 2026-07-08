@@ -17,7 +17,7 @@ without a Skill tool).
 
 BetterPost finds recent sources across news, social, and the open web, ranks them by
 relevance, and writes human-sounding content with real citations and publication
-dates. The first call is free — it issues a demo token, no signup or API key.
+dates. Free to start — sign in with your BetterPost account for free credits.
 
 ## When NOT to reach for it
 
