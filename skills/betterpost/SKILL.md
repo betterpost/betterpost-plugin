@@ -1,6 +1,6 @@
 ---
 name: betterpost
-description: Use when the user wants to write timely, well-sourced content — a newsletter, blog post, LinkedIn post, tweet, or Bluesky post — grounded in current news, social, and web sources relevant to their product, audience, or industry. BetterPost finds recent sources, ranks them by relevance, and writes human-sounding content with real citations and publication dates. Also use to keep an ongoing content project (audience, tone, topics, sources) and generate or repurpose posts from it on demand. Free to try — the first call issues a demo token; no signup or API key needed to start.
+description: Use when the user wants to write timely, well-sourced content — a newsletter, blog post, LinkedIn post, tweet, or Bluesky post — grounded in current news, social, and web sources relevant to their product, audience, or industry. BetterPost finds recent sources, ranks them by relevance, and writes human-sounding content with real citations and publication dates. Also use to keep an ongoing content project (audience, tone, topics, sources) and generate or repurpose posts from it on demand. Sign in with your BetterPost account when prompted — new accounts start with 100 free credits, no key to paste.
 ---
 
 <!-- Synced from https://betterpost.ai/.well-known/skills — do not edit by hand. -->
@@ -18,8 +18,9 @@ audience, ranks them by relevance, and writes human-sounding content with real
 citations and publication dates.
 
 You reach BetterPost through its **MCP server** at `https://betterpost.ai/mcp`
-(Streamable HTTP). Tools are namespaced `betterpost_*`. **Free to try** — the first
-call with no credentials is issued a demo token; no signup or API key needed to start.
+(Streamable HTTP). Tools are namespaced `betterpost_*`. **Sign in with your
+BetterPost account when prompted** — new accounts start with 100 free credits, and
+there's no key to paste.
 
 ## Add BetterPost
 
@@ -27,7 +28,7 @@ BetterPost is a remote MCP server, so any client that supports custom MCP connec
 can use it — no install or local process to run.
 
 - **Claude** — Settings (or Customize) → Connectors → **Add custom connector** →
-  paste `https://betterpost.ai/mcp`. No token is required to start.
+  paste `https://betterpost.ai/mcp`. Your client walks you through signing in on first use.
 - **Claude Code** — `claude mcp add betterpost --transport http https://betterpost.ai/mcp`
 - **Other agents (Cursor, VS Code, Codex, Cline, Zed, and more)** — add a custom
   Streamable-HTTP MCP server pointing at `https://betterpost.ai/mcp`. Per-client steps and
@@ -80,9 +81,6 @@ the user wants a fresh piece. Everything below is for tuning and repurposing.
 
 ## Tool reference
 
-Every tool takes an optional `token` argument (see Configuration). It is omitted
-from the table below.
-
 <!-- BEGIN GENERATED TOOL REFERENCE -->
 | Tool | Parameters | What it does |
 |---|---|---|
@@ -97,7 +95,7 @@ from the table below.
 | `betterpost_get_content` | `contentId` | Fetch one piece of content in full. |
 | `betterpost_get_project` | `projectId` | Returns one project with its relevance `criteria` (each with an id, so a criterion can be targeted for removal via betterpost_update_project). |
 | `betterpost_get_settings` | `projectId` | Returns a project's per-content-type settings (wordLimit and additionalInstructions for each channel). |
-| `betterpost_get_usage` | — | Demo generations remaining, or paid credit balance + recent spend. |
+| `betterpost_get_usage` | — | Your credit balance, freeze state, and recent spend. |
 | `betterpost_hide_story` | `storyId` | Hides a story so generation ignores it. Reversible with unhide_story. |
 | `betterpost_list_content` | `projectId` | List a project's content (summaries + shareable `publicUrl` links). |
 | `betterpost_list_projects` | — | Returns your projects, each with its relevance `criteria` (with ids) that define what counts as on-topic. |
@@ -110,18 +108,13 @@ from the table below.
 | `betterpost_update_settings` | `projectId`, `type`, `wordLimit`, `additionalInstructions` | Patches one content type's wordLimit and/or additionalInstructions (free-form writing guidance for that type; pass an empty string to clear it). Project-wide preferences (title/audience/tone, project-wide additionalInstructions) live on betterpost_update_project. |
 <!-- END GENERATED TOOL REFERENCE -->
 
-## Configuration — authentication and tokens
+## Configuration — signing in
 
-The first call with no credentials is issued a **demo token** in the response. Save
-it to durable memory (a notes file, memory store, or wherever you persist facts
-across conversations) and pass it as the `token` argument on every later call,
-including in future conversations, so the user's projects and content stay linked to
-them. **Reuse the token you already hold — don't request a new one.** The demo is
-good for a limited number of free generations; when it runs out, the response
-explains how to convert to a paid account.
-
-Paid users can instead put their key in the server URL (`?key=…`) or an
-`Authorization: Bearer` header.
+BetterPost uses OAuth. The first time you use it, your client prompts you to sign in
+with your BetterPost account — there's no key or token to paste, and no signup step
+to complete up front. A brand-new account starts with **100 free credits**, and your
+projects and content stay linked to your account automatically across conversations.
+When you run low, buy more credits at https://betterpost.ai/app/billing.
 
 ## Good to know
 
@@ -130,8 +123,8 @@ Paid users can instead put their key in the server URL (`?key=…`) or an
   **publication dates** — surface those to the user.
 - Any images shown come from the **cited source articles**, not from AI image
   generation — BetterPost writes text.
-- Credits are prepaid; when the demo runs out, the response explains how to convert
-  to a paid account. Manage credits at https://betterpost.ai/app/billing.
+- Credits are prepaid; new accounts start with 100 free. Manage credits at
+  https://betterpost.ai/app/billing.
 
 ## Support and policies
 
