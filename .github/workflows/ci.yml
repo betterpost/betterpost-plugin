@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON manifests
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const files = [
+              "package.json",
+              "glama.json",
+              "gemini-extension.json",
+              ".mcp.json",
+              ".claude-plugin/plugin.json",
+              ".claude-plugin/marketplace.json",
+              ".cursor-plugin/plugin.json",
+              ".codex-plugin/plugin.json",
+              ".kimi-plugin/plugin.json",
+              ".version-bump.json",
+            ];
+            for (const f of files) {
+              JSON.parse(readFileSync(f, "utf8"));
+              console.log("ok:", f);
+            }
+          '
+
+      - name: Check version consistency across manifests
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const spec = JSON.parse(readFileSync(".version-bump.json", "utf8"));
+            const get = (obj, path) => path.split(".").reduce((o, k) => o?.[k], obj);
+            const versions = spec.files.map(({ path, field }) => ({
+              path,
+              version: get(JSON.parse(readFileSync(path, "utf8")), field),
+            }));
+            const unique = [...new Set(versions.map((v) => v.version))];
+            for (const v of versions) console.log(`${v.path}: ${v.version}`);
+            if (unique.length !== 1 || !unique[0]) {
+              console.error("Version mismatch across manifests:", unique);
+              process.exit(1);
+            }
+            console.log("all manifests at", unique[0]);
+          '
+
+      - name: Check synced docs are present and well-formed
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const skill = readFileSync("skills/betterpost/SKILL.md", "utf8");
+            if (!skill.startsWith("---")) {
+              console.error("SKILL.md is missing YAML frontmatter");
+              process.exit(1);
+            }
+            const agents = readFileSync("AGENTS.md", "utf8");
+            if (agents.trim().length < 100) {
+              console.error("AGENTS.md looks empty or truncated");
+              process.exit(1);
+            }
+            console.log("SKILL.md + AGENTS.md look sane");
+          '
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build inspector image
+        run: docker build -t betterpost-plugin-inspector .
