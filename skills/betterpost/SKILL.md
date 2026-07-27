@@ -97,6 +97,7 @@ the user wants a fresh piece. Everything below is for tuning and repurposing.
 | `betterpost_get_settings` | `projectId` | Returns a project's per-content-type settings (wordLimit and additionalInstructions for each channel). |
 | `betterpost_get_usage` | — | Your credit balance, freeze state, and recent spend. |
 | `betterpost_hide_story` | `storyId` | Hides a story so generation ignores it. Reversible with unhide_story. |
+| `betterpost_humanize` | `text`, `projectId`, `type`, `tone` | Rewrite existing text (a blog post, marketing copy, an email draft) into BetterPost's readable, human voice. Preserves the meaning, facts, links, and format; returns the rewritten text plus short notes on what changed. The result is only returned — nothing is saved. Costs 2 credits per 1000 words of input (minimum 2), charged on success only. Pass `projectId` to write in that project's tone and instructions, `type` to apply a channel's style, or `tone` to set the voice directly. |
 | `betterpost_list_content` | `projectId` | List a project's content (summaries + shareable `publicUrl` links). |
 | `betterpost_list_projects` | — | Returns your projects, each with its relevance `criteria` (with ids) that define what counts as on-topic. |
 | `betterpost_list_sources` | `projectId`, `limit`, `offset` | Returns one slimmed page of a project's sources plus project-wide `total` and `counts` (ok/failing/disabled/pending, and byType). Page with `limit` (default 50) and `offset`, following the returned `nextOffset` until it is null. |
