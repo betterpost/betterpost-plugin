@@ -1,0 +1,37 @@
+name: Scan skills
+
+# Static security scan of the skills we publish — prompt injection, path
+# traversal, and unsafe instructions. Runs the Cisco AI Defense skill scanner in
+# its no-key tier; findings land in GitHub Code Scanning and any finding at HIGH
+# or above fails the run.
+#
+# The reusable workflow is pinned to a release tag rather than @main, so an
+# upstream change cannot silently alter what runs in our CI. Note that the pinned
+# workflow still installs the `cisco-ai-skill-scanner` PyPI package unpinned; the
+# job holds no secrets and only reads the checkout, so the blast radius is a
+# failed CI run.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - '.github/workflows/scan-skills.yml'
+  pull_request:
+    paths:
+      - 'skills/**'
+      - '.github/workflows/scan-skills.yml'
+  schedule:
+    - cron: '0 7 * * 1' # Weekly, so new rules reach us without a code change
+  workflow_dispatch:
+
+jobs:
+  scan:
+    uses: cisco-ai-defense/skill-scanner/.github/workflows/scan-skills.yml@2.0.13
+    permissions:
+      security-events: write
+      contents: read
+    with:
+      skill_path: skills
+      scan_mode: scan-all
+      fail_on_severity: high

@@ -1,4 +1,4 @@
-# BetterPost — Claude Code plugin
+# BetterPost — agent plugin and skill
 
 Write **timely, well-sourced content** — newsletters, blog posts, LinkedIn posts,
 tweets, and Bluesky posts — grounded in current sources across news, social, and the
@@ -9,22 +9,37 @@ publication dates.
 Works in the agents you already use, through a single [MCP](https://modelcontextprotocol.io)
 server. **Free to start** — sign in with your BetterPost account to get free credits.
 
-## Install (Claude Code)
+## Install
+
+### Any agent
+
+```
+npx skills add betterpost/betterpost-plugin
+```
+
+This installs the `betterpost` skill into whichever agent you use. It does not
+configure the MCP server — the skill walks your agent through registering
+`https://betterpost.ai/mcp` the first time you ask for content.
+
+### Claude Code
 
 ```
 /plugin marketplace add betterpost/betterpost-plugin
 /plugin install betterpost@betterpost
 ```
 
-That installs the `betterpost` skill and registers the BetterPost MCP server. Ask
-your agent to write a newsletter or post about what's happening in your space and it
-will set up a project and generate content grounded in current sources.
+This installs the skill **and** registers the MCP server for you.
+
+Either way, ask your agent to write a newsletter or post about what's happening in
+your space. It sets up a project and generates content grounded in current sources.
 
 ## What's in here
 
 - `skills/betterpost/SKILL.md` — the skill your agent invokes.
 - `.mcp.json` — registers the hosted BetterPost MCP server.
 - `.claude-plugin/` — the plugin manifest and self-listed marketplace.
+- `.codex-plugin/`, `.cursor-plugin/`, `.kimi-plugin/`, `.agents/`, `.opencode/`,
+  `.pi/`, `gemini-extension.json` — manifests for the other agents.
 
 ## Using the server directly
 

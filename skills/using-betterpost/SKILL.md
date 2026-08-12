@@ -1,6 +1,8 @@
 ---
 name: using-betterpost
 description: Use when the user wants to write content informed by current, real-world sources — a newsletter, blog post, LinkedIn post, tweet, or Bluesky post about what's happening now in their space. Points you to the betterpost skill.
+metadata:
+  internal: true
 ---
 
 # Using BetterPost
