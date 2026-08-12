@@ -69,6 +69,26 @@ jobs:
             console.log("SKILL.md + AGENTS.md look sane");
           '
 
+  # `npx skills add betterpost/betterpost-plugin` is an advertised install path, so
+  # the skills the skills CLI discovers here are public API. Assert the set is
+  # exactly what we intend, so the public listing can't silently gain or lose a
+  # skill. Telemetry is off: install counts are the skills.sh ranking signal and
+  # CI must never inflate ours.
+  skills-listing:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      DISABLE_TELEMETRY: '1'
+      DO_NOT_TRACK: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Check the discovered skill set
+        run: node scripts/check-skills-listing.js
+
   docker:
     runs-on: ubuntu-latest
     steps:

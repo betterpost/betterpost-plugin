@@ -1,5 +1,30 @@
 # scripts
 
+## check-skills-listing.js — guard the public skills.sh listing
+
+`npx skills add betterpost/betterpost-plugin` is an advertised install path, so the
+skills the [skills CLI](https://skills.sh) discovers here are public API. This check
+runs the real CLI against the checkout and asserts the discovered set:
+
+- default discovery → `betterpost` only
+- `INSTALL_INTERNAL_SKILLS=1` → `betterpost` and `using-betterpost`
+
+`using-betterpost` is a bootstrap pointer skill. Its frontmatter carries
+`metadata.internal: true`, which keeps it out of the public listing. The per-agent
+bootstrap paths (the session-start hooks, `GEMINI.md`, and the OpenCode and Pi
+extensions) read the file directly, so they are unaffected.
+
+```
+node scripts/check-skills-listing.js
+```
+
+It runs in CI as the `skills-listing` job in
+[`ci.yml`](../.github/workflows/ci.yml). Telemetry is disabled on every invocation:
+install counts are the skills.sh ranking signal and our CI must never inflate them.
+
+If you add or remove a skill on purpose, update `PUBLIC_SKILLS` / `INTERNAL_SKILLS`
+in the script in the same pull request.
+
 ## sync.js — sync skill docs from betterpost.ai
 
 The BetterPost skill docs in this repo are **synced automatically** from the
